@@ -7,7 +7,7 @@ I post my code on github to share it with you, it can be helpful if you are stuc
 
 ## Usage
 
-Simply run the scripts (part 1 or part 2) using `python <file/to/run.py>`\
+Simply run the scripts (part 1 or part 2) using `python <file/to/run.py>` (Python 3.11)\
 It will ask you the absolute path of the input file (easier for me).
 Put it in and... DONE!
 
