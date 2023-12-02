@@ -1,5 +1,5 @@
 # AdventOfCode2023
-My advent of code attempt of 2023 !
+My [advent of code](https://adventofcode.com/) attempt of 2023 !
 
 ## Infos
 I am going to try to do the advent of code of 2023 in Python (3.11), C, C++, C#, Rust (maybe)\
