@@ -61,11 +61,10 @@ int get_color_id(char *str)
     return (-1);
 }
 
-int get_draw_vals(char *str, int *colors)
+int get_draw_mins(char *str, int *colors)
 {
     char *token;
     int number, id;
-    int power = 0;
 
     token = strtok_r(str, ",", &str);
     while (token != NULL)
@@ -82,7 +81,7 @@ int get_draw_vals(char *str, int *colors)
     return 0;
 }
 
-int check_line(char *str)
+int get_line_power(char *str)
 {
     char *token;
     int colors[3] = {0, 0, 0};
@@ -91,7 +90,7 @@ int check_line(char *str)
     token = strtok_r(str, ";", &str);
     while (token != NULL)
     {
-        get_draw_vals(token, colors);
+        get_draw_mins(token, colors);
 
         token = strtok_r(NULL, ";", &str);
     }
@@ -105,7 +104,6 @@ int check_line(char *str)
 int main(void)
 {
     size_t size = 0;
-    int sum = 0;
     int file = 0;
     char *file_content;
     char *token;
@@ -152,7 +150,7 @@ int main(void)
     while (token != NULL)
     {
         printf("Check game %s\n", token);
-        power += check_line(token + get_game_end(token));
+        power += get_line_power(token + get_game_end(token));
 
         token = strtok_r(NULL, "\n", &file_content);
     }
