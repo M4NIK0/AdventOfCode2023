@@ -272,6 +272,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Loop");
+  Serial.println("Sum: " + String(sum));
   delay(1000);
 }
