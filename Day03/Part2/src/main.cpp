@@ -148,16 +148,16 @@ String input[] {
 };
 
 String inputTest[] {
-  "467..114..",
+  "467.......",
   "...*......",
-  "..35..633.",
-  "......#...",
-  "617*......",
-  ".....+.58.",
-  "..592.....",
-  "......755.",
-  "...$.*....",
-  ".664.598.."
+  "..35......",
+  "..........",
+  "..........",
+  ".45*68....",
+  "..........",
+  "..........",
+  ".....*....",
+  ".....598.."
 };
 
 bool isNum(char c) {
@@ -259,6 +259,28 @@ int checkGear(String map[], int x, int y)
       numberBegin = getNumberStart(map[y + 1], x + 1);
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
       Serial.print("Bottom right: ");
+      Serial.println(values[numbers]);
+      numbers++;
+    }
+  }
+
+  // LEFT
+  if (x > 0) {
+    if (isNum(map[y][x - 1])) {
+      numberBegin = getNumberStart(map[y], x - 1);
+      values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
+      Serial.print("Left: ");
+      Serial.println(values[numbers]);
+      numbers++;
+    }
+  }
+
+  // RIGHT
+  if (x < INPUT_TEST_SIZE_X - 1) {
+    if (isNum(map[y][x + 1])) {
+      numberBegin = getNumberStart(map[y], x + 1);
+      values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
+      Serial.print("Right: ");
       Serial.println(values[numbers]);
       numbers++;
     }
