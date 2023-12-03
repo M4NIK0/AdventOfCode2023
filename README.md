@@ -12,6 +12,6 @@ Please don't use my code to cheat, it's not the point of the advent of code.\
 I post my code on github to share it with you, it can be helpful if you are stuck on a problem, but please don't use it to cheat at any point.
 
 ## Thanks
-Thanks to [Antoine Jeanson ](https://github.com/antoinejeanson) for the idea of doing the advent (it's my first time!).\
+Thanks to [Antoine Jeanson ](https://github.com/antoinejeanson) for the idea of doing the advent (it's my first time!).
 
 # Here we go!
