@@ -147,19 +147,6 @@ String input[] {
     "....737.....608..........362...336....642....606..................262......................................209.........................617.."
 };
 
-String inputTest[] {
-  "467.......",
-  "...*......",
-  "..35......",
-  "..........",
-  "..........",
-  ".45*68....",
-  "..........",
-  "..........",
-  ".....*....",
-  ".....598.."
-};
-
 bool isNum(char c) {
   return ((c >= '0') && (c <= '9'));
 }
@@ -167,7 +154,7 @@ bool isNum(char c) {
 int getNumberSize(String str, int pos) {
   int size = 0;
   
-  while (isNum(str[pos + size]) && (pos + size < INPUT_TEST_SIZE_X)) {
+  while (isNum(str[pos + size]) && (pos + size < INPUT_SIZE_X)) {
     size++;
   }  
 
@@ -177,7 +164,7 @@ int getNumberSize(String str, int pos) {
 int getNumberStart(String str, int pos) {
   int start = 0;
 
-  while (isNum(str[pos + start]) && ((pos + start) >= 0 && (pos + start) <= INPUT_TEST_SIZE_X - 1)) {
+  while (isNum(str[pos + start]) && ((pos + start) >= 0 && (pos + start) <= INPUT_SIZE_X - 1)) {
     start--;
   }  
 
@@ -201,21 +188,16 @@ int checkGear(String map[], int x, int y)
       isTopMiddle = true;
       numberBegin = getNumberStart(map[y - 1], x);
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Top middle: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
 
   // BOTTOM
-  if (y < INPUT_TEST_SIZE_Y - 1) {
+  if (y < INPUT_SIZE_Y - 1) {
     if (isNum(map[y + 1][x])) {
       isBottomMiddle = true;
       numberBegin = getNumberStart(map[y + 1], x);
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Bottom middle: ");
-      Serial.println(values[numbers]);
-      Serial.println("Number begin: " + String(numberBegin));
       numbers++;
     }
   }
@@ -225,41 +207,33 @@ int checkGear(String map[], int x, int y)
     if (isNum(map[y - 1][x - 1])) {
       numberBegin = getNumberStart(map[y - 1], x - 1);
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Top left: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
 
   // TOP RIGHT
-  if (x < INPUT_TEST_SIZE_X - 1 && y > 0 && !isTopMiddle) {
+  if (x < INPUT_SIZE_X - 1 && y > 0 && !isTopMiddle) {
     if (isNum(map[y - 1][x + 1])) {
       numberBegin = getNumberStart(map[y - 1], x + 1);
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Top right: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
 
   // BOTTOM LEFT
-  if (x > 0 && y < INPUT_TEST_SIZE_Y - 1 && !isBottomMiddle) {
+  if (x > 0 && y < INPUT_SIZE_Y - 1 && !isBottomMiddle) {
     if (isNum(map[y + 1][x - 1])) {
       numberBegin = getNumberStart(map[y + 1], x - 1);
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Bottom left: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
 
   // BOTTOM RIGHT
-  if (x < INPUT_TEST_SIZE_X - 1 && y < INPUT_TEST_SIZE_Y - 1 && !isBottomMiddle) {
+  if (x < INPUT_SIZE_X - 1 && y < INPUT_SIZE_Y - 1 && !isBottomMiddle) {
     if (isNum(map[y + 1][x + 1])) {
       numberBegin = getNumberStart(map[y + 1], x + 1);
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
-      Serial.print("Bottom right: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
@@ -269,19 +243,15 @@ int checkGear(String map[], int x, int y)
     if (isNum(map[y][x - 1])) {
       numberBegin = getNumberStart(map[y], x - 1);
       values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
-      Serial.print("Left: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
 
   // RIGHT
-  if (x < INPUT_TEST_SIZE_X - 1) {
+  if (x < INPUT_SIZE_X - 1) {
     if (isNum(map[y][x + 1])) {
       numberBegin = getNumberStart(map[y], x + 1);
       values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
-      Serial.print("Right: ");
-      Serial.println(values[numbers]);
       numbers++;
     }
   }
@@ -293,21 +263,12 @@ int checkGear(String map[], int x, int y)
   Serial.print("Numbers: ");
   Serial.println(numbers);
   Serial.print("Values: ");
-  Serial.print(values[0]);
-  Serial.print(", ");
-  Serial.print(values[1]);
-  Serial.print(", ");
-  Serial.print(values[2]);
-  Serial.print(", ");
-  Serial.print(values[3]);
-  Serial.print(", ");
-  Serial.print(values[4]);
-  Serial.print(", ");
-  Serial.print(values[5]);
-  Serial.print(", ");
-  Serial.print(values[6]);
-  Serial.print(", ");
-  Serial.println(values[7]);
+  for (int i = 0; i < numbers; i++) {
+    Serial.print(values[i]);
+    Serial.print(", ");
+  }
+
+  Serial.println();
 
   if (numbers != 2) {
     return 0;
@@ -324,7 +285,7 @@ int checkLine(String map[], int y)
   bool isSerial;
   int sum = 0;
 
-  for (x = 0; x < INPUT_TEST_SIZE_X; x++) {
+  for (x = 0; x < INPUT_SIZE_X; x++) {
     if (map[y][x] == '*') {
       sum += checkGear(map, x, y);
     }
@@ -340,14 +301,14 @@ void setup() {
 
   startup = millis();
 
-  for (int i = 0; i < INPUT_TEST_SIZE_Y; i++) {
-    int lineSum = checkLine(inputTest, i);
+  for (int i = 0; i < INPUT_SIZE_Y; i++) {
+    int lineSum = checkLine(input, i);
     Serial.println(lineSum);
     sum += lineSum;
   }
 
-  for (int i = 0; i < INPUT_TEST_SIZE_Y; i++) {
-    Serial.println(inputTest[i]);
+  for (int i = 0; i < INPUT_SIZE_Y; i++) {
+    Serial.println(input[i]);
   }
   Serial.println("Total sum: " + String(sum));
 
@@ -357,6 +318,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Loop");
+  Serial.println("Sum: " + String(sum));
   delay(1000);
 }
