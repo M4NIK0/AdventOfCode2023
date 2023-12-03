@@ -4,10 +4,13 @@
 
 #include "input.hpp"
 
+// Start time of the program
 unsigned long startup = 0;
 
+// Final sum
 int sum = 0;
 
+// Input (You can change it)
 String input[] {
     ".479........155..............944.....622..............31.........264.......................532..........................254.........528.....",
     "..............-...............%.....+...................=....111*.................495.......+.......558..................../..........*.....",
@@ -151,110 +154,159 @@ String input[] {
     "....737.....608..........362...336....642....606..................262......................................209.........................617.."
 };
 
+// Check if a character is a number
 bool isNum(char c) {
   return ((c >= '0') && (c <= '9'));
 }
 
+// Get the size of a number
 int getNumberSize(String str, int pos) {
+  // Final size
   int size = 0;
   
+  // Check if the character is a number
   while (isNum(str[pos + size]) && (pos + size < INPUT_SIZE_X)) {
     size++;
   }  
 
-  return (size);
+  // Return the size
+  return size;
 }
 
+// Get the start of a number
 int getNumberStart(String str, int pos) {
+  // Start position
   int start = 0;
 
+  // Check if the character is a number
   while (isNum(str[pos + start]) && ((pos + start) >= 0 && (pos + start) <= INPUT_SIZE_X - 1)) {
     start--;
-  }  
+  }
 
+  // Return the start
   return (pos + start + 1);
 }
 
+// Check if a gear has exactly two numbers around it
 int checkGear(String map[], int x, int y)
 {
+  // Number of values around the gear
   int numbers = 0;
+
+  // Values around the gear
   int values[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
+  // Number begin index and size
   int numberBegin = 0;
   int numberSize = 0;
 
+  // If number is at top middle
   bool isTopMiddle = false;
+
+  // If number is at bottom middle
   bool isBottomMiddle = false;
 
-  // TOP
+  // TOP check
   if (y > 0) {
+    // Check if the character is a number
     if (isNum(map[y - 1][x])) {
       isTopMiddle = true;
+      // Get the number begin index
       numberBegin = getNumberStart(map[y - 1], x);
+
+      // Get the number and store it
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // BOTTOM
+  // BOTTOM check
   if (y < INPUT_SIZE_Y - 1) {
+    // Check if the character is a number
     if (isNum(map[y + 1][x])) {
       isBottomMiddle = true;
+      // Get the number begin index
       numberBegin = getNumberStart(map[y + 1], x);
+
+      // Get the number and store it
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // TOP LEFT
+  // TOP LEFT check
   if (x > 0 && y > 0 && !isTopMiddle) {
+    // Check if the character is a number
     if (isNum(map[y - 1][x - 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y - 1], x - 1);
+
+      // Get the number and store it
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // TOP RIGHT
+  // TOP RIGHT check
   if (x < INPUT_SIZE_X - 1 && y > 0 && !isTopMiddle) {
+    // Check if the character is a number
     if (isNum(map[y - 1][x + 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y - 1], x + 1);
+
+      // Get the number and store it
       values[numbers] = map[y - 1].substring(numberBegin, getNumberSize(map[y - 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // BOTTOM LEFT
+  // BOTTOM LEFT check
   if (x > 0 && y < INPUT_SIZE_Y - 1 && !isBottomMiddle) {
+    // Check if the character is a number
     if (isNum(map[y + 1][x - 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y + 1], x - 1);
+
+      // Get the number and store it
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // BOTTOM RIGHT
+  // BOTTOM RIGHT check
   if (x < INPUT_SIZE_X - 1 && y < INPUT_SIZE_Y - 1 && !isBottomMiddle) {
+    // Check if the character is a number
     if (isNum(map[y + 1][x + 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y + 1], x + 1);
+
+      // Get the number and store it
       values[numbers] = map[y + 1].substring(numberBegin, getNumberSize(map[y + 1], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // LEFT
+  // LEFT check
   if (x > 0) {
+    // Check if the character is a number
     if (isNum(map[y][x - 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y], x - 1);
+
+      // Get the number and store it
       values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
       numbers++;
     }
   }
 
-  // RIGHT
+  // RIGHT check
   if (x < INPUT_SIZE_X - 1) {
+    // Check if the character is a number
     if (isNum(map[y][x + 1])) {
+      // Get the number begin index
       numberBegin = getNumberStart(map[y], x + 1);
+
+      // Get the number and store it
       values[numbers] = map[y].substring(numberBegin, getNumberSize(map[y], numberBegin) + numberBegin).toInt();
       numbers++;
     }
@@ -267,61 +319,88 @@ int checkGear(String map[], int x, int y)
   Serial.print("Numbers: ");
   Serial.println(numbers);
   Serial.print("Values: ");
+
+  // Print the values around the gear
   for (int i = 0; i < numbers; i++) {
     Serial.print(values[i]);
     Serial.print(", ");
   }
-
   Serial.println();
 
+  // Check if there are exactly two numbers around the gear
   if (numbers != 2) {
+    // If not, return 0
     return 0;
   } else {
+    // If yes, return the computed ratio of the two numbers
     return (values[0] * values[1]);
   }
 
+  // If something went wrong, return 0 as default
   return 0;
 }
 
+// Check a line for gears
 int checkLine(String map[], int y)
 {
+  // Current x position
   int x;
-  bool isSerial;
+
+  // Sum of the line
   int sum = 0;
 
+  // Check every character of the line
   for (x = 0; x < INPUT_SIZE_X; x++) {
+    // Check if the character is a gear
     if (map[y][x] == '*') {
+      // If yes, add the computed ratio to the sum
       sum += checkGear(map, x, y);
     }
   }
 
+  // Return the sum
   return sum;
 }
 
+// Arduino setup
 void setup() {
+  // Some serial stuff to get the result
   Serial.begin(115200);
   delay(1500);
   Serial.println("Hello AdventOfCode 2023!");
 
+  // Start time (just to flex)
   startup = millis();
 
+  // Check every line for gears
   for (int i = 0; i < INPUT_SIZE_Y; i++) {
+    // Check the line
     int lineSum = checkLine(input, i);
+
+    // Print the line sum
     Serial.println(lineSum);
+
+    // Add the line sum to the total sum
     sum += lineSum;
   }
 
+  // Print the input (You can remove it)
   for (int i = 0; i < INPUT_SIZE_Y; i++) {
     Serial.println(input[i]);
   }
+
+  // Print the total sum
   Serial.println("Total sum: " + String(sum));
 
+  // Print the computation time
   Serial.print("Computation done in ");
   Serial.print(millis() - startup);
   Serial.println(" ms");
 }
 
+// Arduino loop
 void loop() {
+  // Print the sum every second if you missed the startup
   Serial.println("Sum: " + String(sum));
   delay(1000);
 }
