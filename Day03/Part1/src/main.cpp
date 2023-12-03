@@ -1,3 +1,7 @@
+/*
+** Advent of code 2023, Day 3n Part 1
+*/
+
 #include "input.hpp"
 
 unsigned long startup = 0;

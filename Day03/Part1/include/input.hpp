@@ -1,3 +1,7 @@
+/*
+** Advent of code 2023, Day 3n Part 1
+*/
+
 #ifndef INPUT_HPP
     #define INPUT_HPP
 
