@@ -4,10 +4,13 @@
 
 #include "input.hpp"
 
+// Startup time
 unsigned long startup = 0;
 
+// Sum of all numbers
 int sum = 0;
 
+// Input (if you change the input, change the size in input.hpp too)
 String input[] {
     ".479........155..............944.....622..............31.........264.......................532..........................254.........528.....",
     "..............-...............%.....+...................=....111*.................495.......+.......558..................../..........*.....",
@@ -151,26 +154,39 @@ String input[] {
     "....737.....608..........362...336....642....606..................262......................................209.........................617.."
 };
 
+// Check if a character is a number
 bool isNum(char c) {
   return ((c >= '0') && (c <= '9'));
 }
 
+// Check if a character is a symbol
 bool isSymbol(char c) {
   return (!isNum(c) && (c != '.'));
 }
 
+// Get the size of a number in string
 int getNumberSize(String str, int pos) {
+  // Check if the character at pos is a number
   int size = 0;
   
+  // Check if the character at pos is a number
+  if (!isNum(str[pos])) {
+    return (0);
+  }
+
+  // Get the size of the number
   while (isNum(str[pos + size]) && (pos + size < INPUT_SIZE_X)) {
     size++;
   }  
 
-  return (size);
+  // Return the size
+  return size;
 }
 
+// Check if a number is surrounded by symbols
 bool checkNumber(String map[], int x, int y, int size)
 {
+  // TOP check
   if (y > 0) {
     for (int i = 0; i < size; i++) {
       if (isSymbol(map[y - 1][x + i])) {
@@ -179,6 +195,7 @@ bool checkNumber(String map[], int x, int y, int size)
     }
   }
 
+  // BOTTOM check
   if (y < INPUT_SIZE_Y - 1) {
     for (int i = 0; i < size; i++) {
       if (isSymbol(map[y + 1][x + i])) {
@@ -187,95 +204,131 @@ bool checkNumber(String map[], int x, int y, int size)
     }
   }
 
+  // LEFT check
   if (x > 0) {
     if (isSymbol(map[y][x - 1])) {
       return true;
     }
   }
 
+  // RIGHT check
   if ((x + size) < INPUT_SIZE_X - 1) {
     if (isSymbol(map[y][x + size])) {
       return true;
     }
   }
 
+  // TOP LEFT check
   if (y > 0 && x > 0) {
     if (isSymbol(map[y - 1][x - 1])) {
       return true;
     }
   }
 
+  // TOP RIGHT check
   if (y > 0 && (x + size) < INPUT_SIZE_X - 1) {
     if (isSymbol(map[y - 1][x + size])) {
       return true;
     }
   }
 
+  // BOTTOM LEFT check
   if ((y + 1) < INPUT_SIZE_Y && x > 0) {
     if (isSymbol(map[y + 1][x - 1])) {
       return true;
     }
   }
 
+  // BOTTOM RIGHT check
   if ((y + 1) < INPUT_SIZE_Y && (x + size) < INPUT_SIZE_X - 1) {
     if (isSymbol(map[y + 1][x + size])) {
       return true;
     }
   }
 
+  // No symbol found, return false
   return false;
 }
 
+// Check the given line for any serial numbers
 int checkLine(String map[], int y)
 {
+  // current x position
   int x;
+
+  // is the current number serial?
   bool isSerial;
+
+  // sum of all serial numbers on line
   int sum = 0;
 
+  // Check the line for serial numbers
   for (x = 0; x < INPUT_SIZE_X; x++) {
+    // Check if the character at pos is a number
     if (isNum(map[y][x])) {
+      // Get the size of the number
       int size = getNumberSize(map[y], x);
+
+      // Get the number
       int num = map[y].substring(x, x + size).toInt();
 
+      // Check if the number is serial
       if (checkNumber(map, x, y, size)) {
         isSerial = true;
       } else {
         isSerial = false;
       }
 
+      // Add the number to the sum if it is a serial
       if (isSerial) {
         sum += num;
       }
 
+      // Jump to the end of number  
       x += (size - 1);
     }
   }
 
+  // Return the sum
   return (sum);
 }
 
+// Arduino setup
 void setup() {
+  // Some serial stuff to get the output
   Serial.begin(115200);
   delay(1500);
   Serial.println("Hello AdventOfCode 2023!");
 
+  // Start the timer
   startup = millis();
 
+  // Check all lines for serial numbers
   for (int i = 0; i < INPUT_SIZE_Y; i++) {
+    // Check the line for serial numbers
     int lineSum = checkLine(input, i);
+
+    // Print the line sum
     Serial.print(input[i]);
     Serial.print(" sum -> ");
     Serial.println(lineSum);
+
+    // Add the line sum to the total sum
     sum += lineSum;
   }
+
+  // Print the total sum
   Serial.println("Total sum: " + String(sum));
 
+  // Print the computation time (just to flex)
   Serial.print("Computation done in ");
   Serial.print(millis() - startup);
   Serial.println(" ms");
 }
 
+// Arduino loop
 void loop() {
+  // Print the total sum if you missed it at startup
   Serial.println("Sum: " + String(sum));
   delay(1000);
 }

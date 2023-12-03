@@ -7,6 +7,7 @@
 
     #include <Arduino.h>
 
+    // Input size (if you change the input, change this too)
     #define INPUT_SIZE_X 140
     #define INPUT_SIZE_Y 140
 
