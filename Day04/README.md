@@ -10,7 +10,9 @@ I post my code on github to share it with you, it can be helpful if you are stuc
 ### Run
 
 Using [ruby](https://www.ruby-lang.org/en/downloads/) you can run the main file `ruby <file/to/run.rb>`.\
-Exactly same as running Python code.
+Exactly same as running Python code.\
+
+It will ask you to put the file location in terminal, give it the location of the input and you'll get the answer ;p
 
 ## Comments
 
