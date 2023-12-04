@@ -18,6 +18,13 @@ Since i started to type my first Ruby lines today (literraly) it was pretty diff
 But now, i just fell in love with this "small" and "cute" language, it was incredibly lovely to type and learn!\
 I will definitely try to get further exploring this cute red crystal!
 
+Oh yeah, also, i was absolutely dead the day i made it (really need more sleep -_-) so the names are not quite explicit:
+What i call "good card" are the winning numbers (the ones on the left)\
+What i cal "test card" are the random others numbers (the ones on the right)\
+And to finish, what i call "dupplicates" are just the ammounts of cards with same numbers!
+
+Hope it will help ;p
+
 # Problems
 
 ## Part 1
